@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile Biodata</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+      background-color: #333;
+      padding: 1rem;
+      color: white;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+    }
+    nav ul li {
+      cursor: pointer;
+    }
+    .container {
+      padding: 20px;
+    }
+    .intro {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .intro-text {
+      flex: 1;
+      padding: 10px;
+    }
+    .intro img {
+      width: 300px;
+      height: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    .portfolio {
+      margin-top: 30px;
+    }
+    .portfolio-item {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .box {
+      border: 1px solid #ddd;
+      width: 200px;
+      padding: 10px;
+      text-align: center;
+    }
+    .box img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+    }
+    input, button {
+      margin: 5px;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Section 1: Menu -->
+  <nav>
+    <ul>
+      <li>Home</li>
+      <li>Biodata</li>
+      <li>Portfolio</li>
+    </ul>
+  </nav>
+
+  <div class="container">
+
+    <!-- Section 2: Judul dan Gambar -->
+    <div class="intro">
+      <div class="intro-text">
+        <h2>Selamat Datang di Website Saya</h2>
+        <p>Ini adalah contoh tampilan biodata menggunakan HTML dan JavaScript sederhana.</p>
+      </div>
+      <img src="images/profil.jpg" alt="Foto Profil" />
+    </div>
+
+    <!-- Section 3: Biodata -->
+    <h3>About Me</h3>
+    <table>
+      <tr>
+        <th>Full Name</th>
+        <th>Education</th>
+        <th>Passion</th>
+      </tr>
+      <tr>
+        <td>Putra Pratama Okta Riano</td>
+        <td>S1 Rekayasa Perangkat Lunak</td>
+        <td>Programmer</td>
+      </tr>
+      <tr>
+        <th>Contact</th>
+        <th>Hobi</th>
+        <th>Alamat</th>
+      </tr>
+      <tr>
+        <td>088216047910</td>
+        <td>Ngoding</td>
+        <td>Indonesia</td>
+      </tr>
+    </table>
+
+    <!-- Section 4: Portfolio dengan CRUD -->
+    <div class="portfolio">
+      <h3>Portofolio</h3>
+      
+      <!-- Form CRUD -->
+      <input type="text" id="projectTitle" placeholder="Judul Project" />
+      <input type="text" id="projectDesc" placeholder="Deskripsi" />
+      <button onclick="addProject()">Tambah</button>
+
+      <div id="portfolioContainer" class="portfolio-item"></div>
+    </div>
+  </div>
+
+  <script>
+    let projects = [];
+
+    function renderProjects() {
+      const container = document.getElementById("portfolioContainer");
+      container.innerHTML = "";
+      projects.forEach((proj, index) => {
+        container.innerHTML += `
+          <div class="box">
+            <img src="images/project1.jpg" alt="Project Image" />
+            <strong>${proj.title}</strong>
+            <p>${proj.desc}</p>
+            <button onclick="editProject(${index})">Edit</button>
+            <button onclick="deleteProject(${index})">Hapus</button>
+          </div>
+        `;
+      });
+    }
+
+    function addProject() {
+      const title = document.getElementById("projectTitle").value.trim();
+      const desc = document.getElementById("projectDesc").value.trim();
+      if (title && desc) {
+        projects.push({ title, desc });
+        renderProjects();
+        document.getElementById("projectTitle").value = "";
+        document.getElementById("projectDesc").value = "";
+      } else {
+        alert("Isi kedua input terlebih dahulu.");
+      }
+    }
+
+    function editProject(index) {
+      const newTitle = prompt("Edit Judul:", projects[index].title);
+      const newDesc = prompt("Edit Deskripsi:", projects[index].desc);
+      if (newTitle && newDesc) {
+        projects[index] = { title: newTitle, desc: newDesc };
+        renderProjects();
+      }
+    }
+
+    function deleteProject(index) {
+      if (confirm("Hapus project ini?")) {
+        projects.splice(index, 1);
+        renderProjects();
+      }
+    }
+
+    // Inisialisasi awal
+    renderProjects();
+  </script>
+</body>
+</html>
